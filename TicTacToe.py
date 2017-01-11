@@ -1,5 +1,6 @@
 # tic-tac-toe
 TTT = {}
+WC = {}
 
 TTT["TL"] = ' ' 
 TTT["TC"] = ' '
@@ -10,6 +11,8 @@ TTT["MR"] = ' '
 TTT["BL"] = ' '
 TTT["BC"] = ' '
 TTT["BR"] = ' '
+
+
 
 
 computerScore = 0
@@ -52,6 +55,16 @@ def player2Turn(turn):
 
 def printBoard():
 
+    print("TL = top left")
+    print("TC = top center")
+    print("TR = top right")
+    print("ML = middle left")
+    print("MC = middle center")
+    print("MR = middle right")
+    print("BL = bottom left")
+    print("BC = bottom center")
+    print("BR = bottom right")
+
     print("    |    |   ")
     print(" %s  | %s  | %s " % (TTT["TL"], TTT["TC"], TTT["TR"]))
     print("----+----+----")
@@ -59,12 +72,8 @@ def printBoard():
     print("----+----+----")
     print(" %s  | %s  | %s  " % (TTT["BL"], TTT["BC"], TTT["BR"]))
     print("    |    |   ")
+
     
 while player1Choice != 'q':
+    printBoard()
     player1Turn(turn)
-    #player2Turn(turn)    
-
-#def winCondition():
-    #break
-
-    # need to make functions for win conditions and player 1 and 2 turns
