@@ -1,80 +1,142 @@
-# tic-tac-toe
+# tic-tac-toe 2 player game
+
+#defined two hash tables titled TTT (tic-tac-tow) and WC (win condition)
 TTT = {}
 WC = {}
 
-TTT["TL"] = ' ' 
-TTT["TC"] = ' '
-TTT["TR"] = ' '
-TTT["ML"] = ' '
-TTT["MC"] = ' '
-TTT["MR"] = ' '
-TTT["BL"] = ' '
-TTT["BC"] = ' '
-TTT["BR"] = ' '
+#TTT will be the tic-tac-toe board intialized to blank space
+TTT['1'] = ' ' 
+TTT['2'] = ' '
+TTT['3'] = ' '
+TTT['4'] = ' '
+TTT['5'] = ' '
+TTT['6'] = ' '
+TTT['7'] = ' '
+TTT['8'] = ' '
+TTT['9'] = ' '
 
+#WC will have key values X and O and be intialized to blank space as well
+WC['X'] = ' '
+WC['O'] = ' '
 
-computerScore = 0
-playerScore = 0
-player1Choice = ''
-player2Choice = ''
+#since players use 1-9 to pick board spaces their choices are intialized to 0                                               
+player1Choice = 0
+player2Choice = 0
+
+#global won variable initialized to false
+global won
+won = False
+
+#global tie variable initialized to false
+global tie
+tie = False
+
+#global turn counter
 global turn
-turn = True 
+turn = 0
 
-def player1Turn(turn):
-    while turn == True:
-        player1Choice = input("")
-    
-        if(TTT[str(player1Choice)] == ' '):
-            TTT[str(player1Choice)] = 'X'
-            turn = False
-        else:
-            print("That space is taken")
-        
-    printBoard()
-
-    player2Turn(turn)
-
-
-def player2Turn(turn):
-    while turn == False:
+#player1 (X player) function
+def player1Turn():
+    global turn
+    while True:
         player1Choice = input("")
         
-        if(TTT[str(player1Choice)] == ' '):
-            TTT[str(player1Choice)] = 'O'
-            turn = True
-        else:
+        if(TTT[player1Choice] == ' '):
+            TTT[player1Choice] = 'X'
+            turn += 1
+            break
+        elif(TTT[player1Choice] == 'X' or 'O'):
             print("That space is taken")
+        else:
+            print("Not a valid input")
+
             
+    WC['X'] = TTT['1'] + TTT['2'] + TTT['3'],\
+              TTT['4'] + TTT['5'] + TTT['6'],\
+              TTT['7'] + TTT['8'] + TTT['9'],\
+              TTT['1'] + TTT['4'] + TTT['7'],\
+              TTT['2'] + TTT['5'] + TTT['8'],\
+              TTT['3'] + TTT['6'] + TTT['9'],\
+              TTT['3'] + TTT['5'] + TTT['7'],\
+              TTT['1'] + TTT['5'] + TTT['9']
 
-    printBoard()
+#player2 (O player) function
+def player2Turn():
+    global turn
+    while True:
+        player1Choice = input("")
+        
+        if(TTT[player1Choice] == ' '):
+            TTT[player1Choice] = 'O'
+            turn += 1
+            break
+        elif(TTT[player1Choice] == 'X' or 'O'):
+            print("That space is taken")
+        else:
+            print("Not a valid input")
 
-    player1Turn(turn)
-
-
+    WC['O'] = TTT['1'] + TTT['2'] + TTT['3'],\
+              TTT['4'] + TTT['5'] + TTT['6'],\
+              TTT['7'] + TTT['8'] + TTT['9'],\
+              TTT['1'] + TTT['4'] + TTT['7'],\
+              TTT['2'] + TTT['5'] + TTT['8'],\
+              TTT['3'] + TTT['6'] + TTT['9'],\
+              TTT['3'] + TTT['5'] + TTT['7'],\
+              TTT['1'] + TTT['5'] + TTT['9']
+            
+#function that prints the current board along with the valid 1-9 inputs
 def printBoard():
 
-    print("TL = top left")
-    print("TC = top center")
-    print("TR = top right")
-    print("ML = middle left")
-    print("MC = middle center")
-    print("MR = middle right")
-    print("BL = bottom left")
-    print("BC = bottom center")
-    print("BR = bottom right")
+    print("1 = top left")
+    print("2 = top center")
+    print("3 = top right")
+    print("4 = middle left")
+    print("5 = middle center")
+    print("6 = middle right")
+    print("7 = bottom left")
+    print("8 = bottom center")
+    print("9 = bottom right\n")
 
     print("    |    |   ")
-    print(" %s  | %s  | %s " % (TTT["TL"], TTT["TC"], TTT["TR"]))
+    print(" %s  | %s  | %s " % (TTT['1'], TTT['2'], TTT['3']))
     print("----+----+----")
-    print(" %s  | %s  | %s  " % (TTT["ML"], TTT["MC"], TTT["MR"]))
+    print(" %s  | %s  | %s  " % (TTT['4'], TTT['5'], TTT['6']))
     print("----+----+----")
-    print(" %s  | %s  | %s  " % (TTT["BL"], TTT["BC"], TTT["BR"]))
+    print(" %s  | %s  | %s  " % (TTT['7'], TTT['8'], TTT['9']))
     print("    |    |   ")
 
+#win condition that checks if either player won and then changes global variable won to True
+def winCondition():
+    global won
+    global tie
+    global turn
     
-while player1Choice != 'q':
-    printBoard()
-    player1Turn(turn)
+    if ("XXX" in WC['X']):
+        print("\n-------------------X wins!--------------------\n")
+        won = True
+    elif("OOO" in WC['O']):
+        print("\n-------------------O wins!--------------------\n")
+        won = True
+    else:
+        print("\nno winner yet\n")
+    if (won == False and turn == 9):
+        print("\n-------------------Tie!--------------------\n")
+        tie = True
+        
 
-#def winCondition():
-    #break
+
+#main program will loop until either one player wins or a tie occurs then ends the program  
+while True:
+    printBoard()
+    player1Turn()
+    winCondition()
+    if(won == True or tie == True):
+        printBoard()
+        break
+    printBoard()
+    player2Turn()
+    winCondition()
+    if(won == True or tie == True):
+        printBoard()
+        break
+   
