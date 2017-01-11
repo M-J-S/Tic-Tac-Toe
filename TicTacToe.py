@@ -13,8 +13,6 @@ TTT["BC"] = ' '
 TTT["BR"] = ' '
 
 
-
-
 computerScore = 0
 playerScore = 0
 player1Choice = ''
@@ -77,3 +75,6 @@ def printBoard():
 while player1Choice != 'q':
     printBoard()
     player1Turn(turn)
+
+#def winCondition():
+    #break
